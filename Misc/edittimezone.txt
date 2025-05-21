@@ -1,0 +1,10 @@
+This text file includes instructions on how to edit the timezone using the Linux terminal.
+
+First: Check what timezone you are currently in using;
+timedatectl
+
+Second: Check what timezones are available to be changed to using;
+timedatectl list-timezones
+
+Finally: Use the command to change the timezone to the wanted timezone that is available on the list;
+timedatectl list-timezones <timezone>

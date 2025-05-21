@@ -1,0 +1,8 @@
+To change static-hostname on Terminal
+
+Enter:
+$ sudo hostnamectl set-hostname <hostname>
+
+To check whether name is changed:
+$ hostnamectl
+static-hostname should now be changed to the changed name
