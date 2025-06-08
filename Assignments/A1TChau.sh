@@ -12,9 +12,12 @@ host=$(ip r s default | awk '{print $9}')
 gateway=$(ip r s default | awk '{print $3}')
 dns=$(cat /etc/resolv.conf | grep "nameserver")
 
-users=$(users)
-#diskspace=$(df -h)
-ufw=$(sudo ufw status | awk '{print $2}')
+users=$(users | tr " " ",")
+diskspace=$(df -h --output=target,avail)
+processes=$(ps -e --no-heading | wc -l)
+load_averages=$(uptime | grep "load average" | awk '{print $8,$9,$10}')
+listening_ports=$(ss -ltn | grep -oE ':[0-9]+' | awk -F ':' '{print $2}' | paste -sd ", ")
+ufw_status=$(sudo ufw status | awk '{print $2}')
 
 cat <<EOF
 
@@ -35,10 +38,10 @@ DNS Server: $dns
 System Status
 -------------
 Users Logged In: $users
-Disk Space: FREE SPACE FOR LOCAL FILESYSTEMS IN FORMAT: /MOUNTPOINT N
-Process Count: N
-Load Averages: N, N, N
-Listening Network Ports: N, N, N, ...
-UFW Status: $ufw
+Disk Space: $diskspace
+Process Count: $processes
+Load Averages: $load_averages
+Listening Network Ports: $listening_ports
+UFW Status: $ufw_status
 
 EOF
