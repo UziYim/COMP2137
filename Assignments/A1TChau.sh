@@ -15,7 +15,7 @@ dns=$(cat /etc/resolv.conf | grep "nameserver")
 users=$(users | tr " " ",")
 diskspace=$(df -h --output=target,avail)
 processes=$(ps -e --no-heading | wc -l)
-load_averages=$(uptime | grep "load average" | awk '{print $8,$9,$10}')
+load_averages=$(cat /proc/loadavg | awk '{print $1", "$2", "$3}')
 listening_ports=$(ss -ltn | grep -oE ':[0-9]+' | awk -F ':' '{print $2}' | paste -sd ", ")
 ufw_status=$(sudo ufw status | awk '{print $2}')
 
